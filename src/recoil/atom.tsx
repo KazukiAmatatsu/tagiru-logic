@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 import { Room } from 'src/type'
 
 export const room = atom<Room>({
-  key: 'room_state',
+  key: 'roomInfo',
   default: {
     roomId: '',
     inviteCode: '',

@@ -42,20 +42,12 @@ const NumberCard = () => {
       // 配列からランダムに取得
       const random = Math.floor(Math.random() * numberList.length)
       // それぞれのPlayerに数字カードを配る
-      const pushList = (player: any) => {
-        player.push(numberList[random])
-      }
-      if (player1.length < 5) {
-        pushList(player1)
-      } else if (player2.length < 5) {
-        pushList(player2)
-      } else if (player3.length < 5) {
-        pushList(player3)
-      } else if (player4.length < 5) {
-        pushList(player4)
-      } else {
-        return null
-      }
+      const pushList = (player: any) => player.push(numberList[random])
+      if (player1.length < 5) pushList(player1)
+      else if (player2.length < 5) pushList(player2)
+      else if (player3.length < 5) pushList(player3)
+      else if (player4.length < 5) pushList(player4)
+      else return null
       // 配列から削除する
       numberList.splice(random, 1)
     }
@@ -68,15 +60,15 @@ const NumberCard = () => {
         }
         if (a.number === b.number) {
           if (a.color === 'red') return -1
-          else if (a.color === 'blue') return 1
+          if (a.color === 'blue') return 1
         }
         return 0
       })
     }
-    sortHands(player1)
-    sortHands(player2)
-    sortHands(player3)
-    sortHands(player4)
+    await sortHands(player1)
+    await sortHands(player2)
+    await sortHands(player3)
+    await sortHands(player4)
     await testCards()
   }
 
