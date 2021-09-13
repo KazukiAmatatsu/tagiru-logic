@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 import { Room } from 'src/type'
 
 export const room = atom<Room>({
-  key: 'roomInfo',
+  key: 'room_state',
   default: {
     roomId: '',
     inviteCode: '',
@@ -26,6 +26,13 @@ export const room = atom<Room>({
       isReady: false,
       hands: null,
     },
+    questions: [
+      {
+        used: false,
+        open: false,
+        text: '',
+      },
+    ],
     isGaming: false,
     finished: false,
     loading: false,

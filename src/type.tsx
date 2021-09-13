@@ -5,6 +5,13 @@ export type Player = {
   isReady: boolean
   hands: Hands | undefined
 }
+export type Question = [
+  {
+    used: boolean
+    open: boolean
+    text: string | any
+  }
+]
 
 export type Room = {
   readonly roomId: string
@@ -13,6 +20,7 @@ export type Room = {
   player2: Player
   player3: Player
   player4: Player
+  questions: Question
   isGaming: boolean
   finished: boolean
   loading: boolean
