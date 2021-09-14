@@ -15,6 +15,15 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     color: #333;
   }
+
+  /* flex */
+  .text_center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 `
 
 export default GlobalStyle
