@@ -1,9 +1,10 @@
 import { db } from 'src/firebase'
 import { room } from 'src/recoil/atom'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
+import styled from 'styled-components'
 
 const QuestionCard = () => {
-  const [roomInfo, setRoomInfo] = useRecoilState(room)
+  const roomInfo = useRecoilValue(room)
   const roomRef = db.collection('test').doc('2GiL17k1OYYIZb7QvSIZ')
   const queryRef = roomInfo.questions
 
@@ -12,54 +13,58 @@ const QuestionCard = () => {
     {
       used: false,
       open: false,
-      text: '１または２はどこ？（どちらかひとつ選ぶ）',
+      text: '１または２はどこ？\n（どちらか選ぶ）',
     },
     {
       used: false,
       open: false,
-      text: '３または４はどこ？（どちらかひとつ選ぶ）',
+      text: '３または４はどこ？\n（どちらか選ぶ）',
     },
     { used: false, open: false, text: '５はどこ？' },
     {
       used: false,
       open: false,
-      text: '６または７はどこ？（どちらかひとつ選ぶ）',
+      text: '６または７はどこ？\n（どちらか選ぶ）',
     },
     {
       used: false,
       open: false,
-      text: '８または９はどこ？（どちらかひとつ選ぶ）',
+      text: '８または９はどこ？\n（どちらか選ぶ）',
     },
-    { used: false, open: false, text: '偶数は何枚ある？（０も含む）' },
+    { used: false, open: false, text: '偶数は何枚ある？\n（０も含む）' },
     { used: false, open: false, text: '奇数は何枚ある？' },
-    { used: false, open: false, text: '赤の数字タイルは何枚ある？' },
-    { used: false, open: false, text: '青の数字タイルは何枚ある？' },
+    { used: false, open: false, text: '赤の数字タイルは\n何枚ある？' },
+    { used: false, open: false, text: '青の数字タイルは\n何枚ある？' },
     { used: false, open: false, text: '赤の数の合計は？' },
     { used: false, open: false, text: '青の数の合計は？' },
-    { used: false, open: false, text: '小さいほうから３枚の合計は？' },
+    { used: false, open: false, text: '小さいほうから\n３枚の合計は？' },
     { used: false, open: false, text: '中央の３枚の合計は？' },
-    { used: false, open: false, text: '大きいほうから３枚の合計は？' },
+    { used: false, open: false, text: '大きいほうから\n３枚の合計は？' },
     {
       used: false,
       open: false,
-      text: '［共有情報カード］数字タイルすべての数の合計は？',
+      text: '［共有情報カード］\n数字タイルすべての\n数の合計は？',
     },
     {
       used: false,
       open: false,
-      text: '［共有情報カード］中央の数字タイルは５以上？４以下？',
+      text: '［共有情報カード］\n中央の数字タイルは\n５以上？４以下？',
     },
     {
       used: false,
       open: false,
-      text: '［共有情報カード］数字タイルの最大の数から、最小の数を引いた数は？',
+      text: '［共有情報カード］\n数字タイルの\n最大から最小の\n数を引いた数は？',
     },
-    { used: false, open: false, text: '数字が連続している数字タイルはどこ？' },
-    { used: false, open: false, text: '同じ数字タイルのペアは何組ある？' },
     {
       used: false,
       open: false,
-      text: '同じ色がとなり合っている数字タイルはどこ？',
+      text: '数字が連続している\n数字タイルはどこ？',
+    },
+    { used: false, open: false, text: '同じ数字タイルの\nペアは何組ある？' },
+    {
+      used: false,
+      open: false,
+      text: '同じ色が\n隣合っている\n数字タイルはどこ？',
     },
   ]
 
@@ -105,23 +110,53 @@ const QuestionCard = () => {
       >
         質問カードをセット
       </button>
-      <ul>
+      <StyledCardList>
         {queryRef &&
           queryRef.map((item, index) => {
             // indexをstring型からnumber型に変換
             const key = Number(index)
             if (item.open === true && item.used === false) {
               return (
-                <li key={index} onClick={() => usedCards(key)}>
+                <div
+                  key={index}
+                  onClick={() => usedCards(key)}
+                  className='questionCard text_center'
+                >
                   {item.text}
-                </li>
+                </div>
               )
             }
             return null
           })}
-      </ul>
+      </StyledCardList>
     </div>
   )
 }
 
 export default QuestionCard
+
+const StyledCardList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 5rem;
+  user-select: none; /* CSS3 */
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Safari、Chromeなど */
+  -ms-user-select: none; /* IE10かららしい */
+  .questionCard {
+    width: 20rem;
+    height: 10rem;
+    padding: 1rem;
+    margin: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    white-space: pre-wrap;
+    text-shadow: #fff 2px 0, #fff -2px 0, #fff 0 -2px, #fff 0 2px, #fff 2px 2px,
+      #fff -2px 2px, #fff 2px -2px, #fff -2px -2px, #fff 1px 2px, #fff -1px 2px,
+      #fff 1px -2px, #fff -1px -2px, #fff 2px 1px, #fff -2px 1px, #fff 2px -1px,
+      #fff -2px -1px, rgba(0, 0, 0, 0.5) 3px 3px 3px;
+    background-color: ${(props) => props.theme.colors.yellow};
+    border: 0.8rem solid #333;
+    border-radius: 0.5rem;
+  }
+`
