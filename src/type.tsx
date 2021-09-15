@@ -7,7 +7,6 @@ export type Player = {
 }
 export type Question = [
   {
-    used: boolean
     open: boolean
     text: string | any
   }
@@ -21,6 +20,7 @@ export type Room = {
   player3: Player
   player4: Player
   questions: Question
+  usedCards: []
   isGaming: boolean
   finished: boolean
   loading: boolean

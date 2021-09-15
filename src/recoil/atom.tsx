@@ -28,11 +28,11 @@ export const room = atom<Room>({
     },
     questions: [
       {
-        used: false,
         open: false,
         text: '',
       },
     ],
+    usedCards: [],
     isGaming: false,
     finished: false,
     loading: false,
