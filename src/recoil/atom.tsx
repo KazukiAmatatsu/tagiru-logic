@@ -6,26 +6,8 @@ export const room = atom<Room>({
   default: {
     roomId: '',
     inviteCode: '',
-    player1: {
-      name: '',
-      isReady: false,
-      hands: null,
-    },
-    player2: {
-      name: '',
-      isReady: false,
-      hands: null,
-    },
-    player3: {
-      name: '',
-      isReady: false,
-      hands: null,
-    },
-    player4: {
-      name: '',
-      isReady: false,
-      hands: null,
-    },
+    dealer: null,
+    player: {},
     questions: [
       {
         open: false,

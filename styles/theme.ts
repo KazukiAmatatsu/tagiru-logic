@@ -3,7 +3,7 @@ export const theme = {
   background: '#E5E5E5',
   colors: {
     red: '#FF3300',
-    bule: '#0000FF',
+    blue: '#0000FF',
     yellow: '#FFFF00',
   },
 }
