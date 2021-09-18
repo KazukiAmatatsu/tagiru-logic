@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import NumberCard from 'src/components/NumberCard'
 import QuestionCard from 'src/components/QuestionCard'
+import Memo from 'src/components/Memo'
 
 export default function Home() {
   return (
@@ -14,8 +15,9 @@ export default function Home() {
         <h1>
           <p>Hello, Next.js</p>
         </h1>
-        <QuestionCard />
-        <NumberCard />
+        {/* <QuestionCard /> */}
+        {/* <NumberCard /> */}
+        <Memo />
       </main>
 
       <footer></footer>
