@@ -1,10 +1,17 @@
 export type Hands = [{ number: number; color: string }]
 
 export type Player = {
-  name: string
-  isReady: boolean
+  [id: string]: {
+    name: string
+    isReady: boolean
+    hands: Hands | undefined
+  }
+}
+
+export type Dealer = {
   hands: Hands | undefined
 }
+
 export type Question = [
   {
     open: boolean
@@ -15,10 +22,8 @@ export type Question = [
 export type Room = {
   readonly roomId: string
   readonly inviteCode: string
-  player1: Player
-  player2: Player
-  player3: Player
-  player4: Player
+  dealer: Hands | undefined
+  player: Player
   questions: Question
   usedCards: []
   isGaming: boolean

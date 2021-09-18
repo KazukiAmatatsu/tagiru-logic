@@ -7,35 +7,35 @@ import styled from 'styled-components'
 
 const NumberCard = () => {
   const [roomInfo, setRoomInfo] = useRecoilState(room)
-  const handsRef = roomInfo.player1.hands
   const roomId = db.collection('test').doc().id
   const numberList = [
-    { number: 0, color: 'red' },
-    { number: 0, color: 'blue' },
-    { number: 1, color: 'red' },
-    { number: 1, color: 'blue' },
-    { number: 2, color: 'red' },
-    { number: 2, color: 'blue' },
-    { number: 3, color: 'red' },
-    { number: 3, color: 'blue' },
-    { number: 4, color: 'red' },
-    { number: 4, color: 'blue' },
-    { number: 5, color: 'yellow' },
-    { number: 5, color: 'yellow' },
-    { number: 6, color: 'red' },
-    { number: 6, color: 'blue' },
-    { number: 7, color: 'red' },
-    { number: 7, color: 'blue' },
-    { number: 8, color: 'red' },
-    { number: 8, color: 'blue' },
-    { number: 9, color: 'red' },
-    { number: 9, color: 'blue' },
+    { number: 0, color: '#FF0000' },
+    { number: 0, color: '#0000FF' },
+    { number: 1, color: '#FF0000' },
+    { number: 1, color: '#0000FF' },
+    { number: 2, color: '#FF0000' },
+    { number: 2, color: '#0000FF' },
+    { number: 3, color: '#FF0000' },
+    { number: 3, color: '#0000FF' },
+    { number: 4, color: '#FF0000' },
+    { number: 4, color: '#0000FF' },
+    { number: 5, color: '#FFFF00' },
+    { number: 5, color: '#FFFF00' },
+    { number: 6, color: '#FF0000' },
+    { number: 6, color: '#0000FF' },
+    { number: 7, color: '#FF0000' },
+    { number: 7, color: '#0000FF' },
+    { number: 8, color: '#FF0000' },
+    { number: 8, color: '#0000FF' },
+    { number: 9, color: '#FF0000' },
+    { number: 9, color: '#0000FF' },
   ]
 
   let player1 = []
   let player2 = []
   let player3 = []
   let player4 = []
+  let dealer = []
 
   const setNumberCard = async (numberList: any) => {
     while (numberList.length > 0) {
@@ -43,10 +43,11 @@ const NumberCard = () => {
       const random = Math.floor(Math.random() * numberList.length)
       // それぞれのPlayerに数字カードを配る
       const pushList = (player: any) => player.push(numberList[random])
-      if (player1.length < 5) pushList(player1)
-      else if (player2.length < 5) pushList(player2)
-      else if (player3.length < 5) pushList(player3)
-      else if (player4.length < 5) pushList(player4)
+      if (player1.length < 4) pushList(player1)
+      else if (player2.length < 4) pushList(player2)
+      else if (player3.length < 4) pushList(player3)
+      else if (player4.length < 4) pushList(player4)
+      else if (dealer.length < 4) pushList(dealer)
       else return null
       // 配列から削除する
       numberList.splice(random, 1)
@@ -59,8 +60,8 @@ const NumberCard = () => {
           if (a.number > b.number) return 1
         }
         if (a.number === b.number) {
-          if (a.color === 'red') return -1
-          if (a.color === 'blue') return 1
+          if (a.color === '#FF0000') return -1
+          if (a.color === '#0000FF') return 1
         }
         return 0
       })
@@ -69,6 +70,7 @@ const NumberCard = () => {
     await sortHands(player2)
     await sortHands(player3)
     await sortHands(player4)
+    await sortHands(dealer)
     await testCards()
   }
 
@@ -77,25 +79,28 @@ const NumberCard = () => {
       .collection('test')
       .doc('2GiL17k1OYYIZb7QvSIZ')
       .set({
-        player1: {
-          name: '',
-          isReady: false,
-          hands: player1,
-        },
-        player2: {
-          name: '',
-          isReady: false,
-          hands: player2,
-        },
-        player3: {
-          name: '',
-          isReady: false,
-          hands: player3,
-        },
-        player4: {
-          name: '',
-          isReady: false,
-          hands: player4,
+        dealer: dealer,
+        player: {
+          p1: {
+            name: 'aaa',
+            isReady: false,
+            hands: player1,
+          },
+          p2: {
+            name: 'bbb',
+            isReady: false,
+            hands: player2,
+          },
+          p3: {
+            name: 'ccc',
+            isReady: false,
+            hands: player3,
+          },
+          p4: {
+            name: 'ddd',
+            isReady: false,
+            hands: player4,
+          },
         },
       })
   }
@@ -114,62 +119,95 @@ const NumberCard = () => {
       <button onClick={() => setNumberCard(numberList.slice())}>
         カードを配る
       </button>
-      <StyledBox>
-        {handsRef &&
-          Object.entries(handsRef).map(([key, data]) => {
+
+      {roomInfo.player &&
+        Object.entries(roomInfo.player).map(([key, player]) => {
+          return (
+            <StyledPlayerCards>
+              <div key={key} className='playerName text_center'>
+                {player.name}
+              </div>
+              <div className='Cards'>
+                {Object.entries(player.hands).map(([key, data]) => {
+                  return (
+                    <StyledCard key={key} yellow={data.color === '#FFFF00'}>
+                      <div
+                        style={{ backgroundColor: data.color }}
+                        className='card_color'
+                      >
+                        <div className='card_num'>{data.number}</div>
+                      </div>
+                    </StyledCard>
+                  )
+                })}
+              </div>
+            </StyledPlayerCards>
+          )
+        })}
+      <div>ディーラー</div>
+      <StyledDealer>
+        {roomInfo.dealer &&
+          Object.values(roomInfo.dealer).map((data) => {
             return (
-              <StyledCard key={key} style={{ backgroundColor: data.color }}>
-                <div>{data.number}</div>
+              <StyledCard yellow={data.color === '#FFFF00'}>
+                <div
+                  style={{ backgroundColor: data.color }}
+                  className='card_color'
+                >
+                  <div className='card_num'>{data.number}</div>
+                </div>
               </StyledCard>
             )
           })}
-        <br />
-        {roomInfo.player2.hands &&
-          Object.entries(roomInfo.player2.hands).map(([key, data]) => {
-            return (
-              <StyledCard key={key} style={{ backgroundColor: data.color }}>
-                <div>{data.number}</div>
-              </StyledCard>
-            )
-          })}
-        <br />
-        {roomInfo.player3.hands &&
-          Object.entries(roomInfo.player3.hands).map(([key, data]) => {
-            return (
-              <StyledCard key={key} style={{ backgroundColor: data.color }}>
-                <div>{data.number}</div>
-              </StyledCard>
-            )
-          })}
-        <br />
-        {roomInfo.player4.hands &&
-          Object.entries(roomInfo.player4.hands).map(([key, data]) => {
-            return (
-              <StyledCard key={key} style={{ backgroundColor: data.color }}>
-                <div>{data.number}</div>
-              </StyledCard>
-            )
-          })}
-      </StyledBox>
+      </StyledDealer>
     </>
   )
 }
 
 export default NumberCard
 
-const StyledBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 30px;
-  background-color: #f0f0f0;
+const StyledPlayerCards = styled.div`
+  .playerName {
+    font-size: 2rem;
+    color: #333;
+  }
+  .Cards {
+    display: flex;
+    justify-content: space-between;
+    width: 50rem;
+    margin: 0 auto;
+  }
+`
+const StyledCard = styled.div<{ yellow: boolean }>`
+  width: 6rem;
+  height: 8rem;
+  background-color: ${(props) => props.theme.color};
+  position: relative;
+  border-radius: 0.5rem;
+  .card_color {
+    width: 4rem;
+    height: 4rem;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 2rem;
+  }
+  .card_num {
+    color: ${(props) => (props.yellow ? '#333' : '#fff')};
+    line-height: 4rem;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
 `
 
-const StyledCard = styled.div`
-  width: 30px;
-  height: 30px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 25px;
-  line-height: 30px;
-  text-align: center;
+const StyledDealer = styled.div`
+  font-size: 3rem;
+  display: flex;
+  justify-content: space-between;
+  width: 50rem;
+  margin: 0 auto;
 `
