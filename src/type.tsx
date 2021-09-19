@@ -1,4 +1,4 @@
-export type Hands = [{ number: number; color: string }]
+export type Hands = [{ number: number; color: string; open: boolean }]
 
 export type Player = {
   [id: string]: {
