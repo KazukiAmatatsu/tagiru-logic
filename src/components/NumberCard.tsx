@@ -5,31 +5,32 @@ import { useRecoilState } from 'recoil'
 import { Room } from 'src/type'
 import styled from 'styled-components'
 
+export const numberList = [
+  { number: 0, color: '#FF0000', open: false },
+  { number: 1, color: '#FF0000', open: false },
+  { number: 2, color: '#FF0000', open: false },
+  { number: 3, color: '#FF0000', open: false },
+  { number: 4, color: '#FF0000', open: false },
+  { number: 5, color: '#FFFF00', open: false },
+  { number: 6, color: '#FF0000', open: false },
+  { number: 7, color: '#FF0000', open: false },
+  { number: 8, color: '#FF0000', open: false },
+  { number: 9, color: '#FF0000', open: false },
+  { number: 0, color: '#0000FF', open: false },
+  { number: 1, color: '#0000FF', open: false },
+  { number: 2, color: '#0000FF', open: false },
+  { number: 3, color: '#0000FF', open: false },
+  { number: 4, color: '#0000FF', open: false },
+  { number: 5, color: '#FFFF00', open: false },
+  { number: 6, color: '#0000FF', open: false },
+  { number: 7, color: '#0000FF', open: false },
+  { number: 8, color: '#0000FF', open: false },
+  { number: 9, color: '#0000FF', open: false },
+]
+
 const NumberCard = () => {
   const [roomInfo, setRoomInfo] = useRecoilState(room)
   const roomId = db.collection('test').doc().id
-  const numberList = [
-    { number: 0, color: '#FF0000' },
-    { number: 0, color: '#0000FF' },
-    { number: 1, color: '#FF0000' },
-    { number: 1, color: '#0000FF' },
-    { number: 2, color: '#FF0000' },
-    { number: 2, color: '#0000FF' },
-    { number: 3, color: '#FF0000' },
-    { number: 3, color: '#0000FF' },
-    { number: 4, color: '#FF0000' },
-    { number: 4, color: '#0000FF' },
-    { number: 5, color: '#FFFF00' },
-    { number: 5, color: '#FFFF00' },
-    { number: 6, color: '#FF0000' },
-    { number: 6, color: '#0000FF' },
-    { number: 7, color: '#FF0000' },
-    { number: 7, color: '#0000FF' },
-    { number: 8, color: '#FF0000' },
-    { number: 8, color: '#0000FF' },
-    { number: 9, color: '#FF0000' },
-    { number: 9, color: '#0000FF' },
-  ]
 
   let player1 = []
   let player2 = []
@@ -105,6 +106,20 @@ const NumberCard = () => {
       })
   }
 
+  const cardOpen = () => {
+    const newArr =
+      roomInfo.dealer &&
+      Object.values(roomInfo.dealer).map((data) => {
+        return { ...data, open: true }
+      })
+    db.collection('test')
+      .doc('2GiL17k1OYYIZb7QvSIZ')
+      .set({
+        ...roomInfo,
+        dealer: newArr,
+      })
+  }
+
   useEffect(() => {
     db.collection('test')
       .doc('2GiL17k1OYYIZb7QvSIZ')
@@ -119,65 +134,89 @@ const NumberCard = () => {
       <button onClick={() => setNumberCard(numberList.slice())}>
         カードを配る
       </button>
-
-      {roomInfo.player &&
-        Object.entries(roomInfo.player).map(([key, player]) => {
-          return (
-            <StyledPlayerCards>
-              <div key={key} className='playerName text_center'>
-                {player.name}
-              </div>
-              <div className='Cards'>
-                {Object.entries(player.hands).map(([key, data]) => {
-                  return (
-                    <StyledCard key={key} yellow={data.color === '#FFFF00'}>
-                      <div
-                        style={{ backgroundColor: data.color }}
-                        className='card_color'
-                      >
-                        <div className='card_num'>{data.number}</div>
-                      </div>
-                    </StyledCard>
-                  )
-                })}
-              </div>
-            </StyledPlayerCards>
-          )
-        })}
-      <div>ディーラー</div>
+      <button onClick={() => cardOpen()}>カードオープン</button>
       <StyledDealer>
         {roomInfo.dealer &&
-          Object.values(roomInfo.dealer).map((data) => {
+          Object.entries(roomInfo.dealer).map(([key, data]) => {
             return (
-              <StyledCard yellow={data.color === '#FFFF00'}>
-                <div
-                  style={{ backgroundColor: data.color }}
-                  className='card_color'
-                >
-                  <div className='card_num'>{data.number}</div>
-                </div>
+              <StyledCard key={key} yellow={data.color === '#FFFF00'}>
+                {data.open ? (
+                  <div
+                    style={{ backgroundColor: data.color }}
+                    className='card_color'
+                  >
+                    <div className='card_num'>{data.number}</div>
+                  </div>
+                ) : (
+                  <div key={key} className='text'>
+                    TAGIRON
+                  </div>
+                )}
               </StyledCard>
             )
           })}
       </StyledDealer>
+
+      {roomInfo.player &&
+        Object.entries(roomInfo.player).map(([key, player]) => {
+          return (
+            <StyledPlayerCards key={key}>
+              <div className='Cards'>
+                {Object.entries(player.hands).map(([key, data]) => {
+                  return (
+                    <StyledCard key={key} yellow={data.color === '#FFFF00'}>
+                      {data.open ? (
+                        <div
+                          style={{ backgroundColor: data.color }}
+                          className='card_color'
+                        >
+                          <div className='card_num'>{data.number}</div>
+                        </div>
+                      ) : (
+                        <div key={key} className='text'>
+                          TAGIRON
+                        </div>
+                      )}
+                    </StyledCard>
+                  )
+                })}
+              </div>
+              <div className='playerName text_center'>{player.name}</div>
+            </StyledPlayerCards>
+          )
+        })}
     </>
   )
 }
 
 export default NumberCard
 
+const StyledDealer = styled.div`
+  font-size: 3rem;
+  display: flex;
+  justify-content: space-between;
+  width: 30rem;
+  padding: 2rem;
+  margin: 1rem;
+  background-color: ${(props) => props.theme.background};
+`
+
 const StyledPlayerCards = styled.div`
+  padding: 2rem;
+  width: 30rem;
+  background-color: ${(props) => props.theme.background};
+  margin: 1rem;
   .playerName {
-    font-size: 2rem;
+    font-size: 3rem;
     color: #333;
+    margin-top: 1rem;
   }
   .Cards {
     display: flex;
     justify-content: space-between;
-    width: 50rem;
-    margin: 0 auto;
   }
 `
+
 const StyledCard = styled.div<{ yellow: boolean }>`
   width: 6rem;
   height: 8rem;
@@ -202,12 +241,10 @@ const StyledCard = styled.div<{ yellow: boolean }>`
     font-size: 2.5rem;
     font-weight: bold;
   }
-`
-
-const StyledDealer = styled.div`
-  font-size: 3rem;
-  display: flex;
-  justify-content: space-between;
-  width: 50rem;
-  margin: 0 auto;
+  .text {
+    font-size: 0.1rem;
+    color: #fff;
+    line-height: 8rem;
+    text-align: center;
+  }
 `
