@@ -1,140 +1,33 @@
-import { useEffect } from 'react'
-import { db } from 'src/firebase'
-import { room } from 'src/recoil/atom'
-import { useRecoilState } from 'recoil'
-import { Room } from 'src/type'
+import { db } from 'src/firebase/config'
+// import { room } from 'src/recoil/atom'
+// import { useRecoilState } from 'recoil'
+import { useRoom } from 'src/recoil/hooks/useRoom'
 import styled from 'styled-components'
 
-export const numberList = [
-  { number: 0, color: '#FF0000', open: false },
-  { number: 1, color: '#FF0000', open: false },
-  { number: 2, color: '#FF0000', open: false },
-  { number: 3, color: '#FF0000', open: false },
-  { number: 4, color: '#FF0000', open: false },
-  { number: 5, color: '#FFFF00', open: false },
-  { number: 6, color: '#FF0000', open: false },
-  { number: 7, color: '#FF0000', open: false },
-  { number: 8, color: '#FF0000', open: false },
-  { number: 9, color: '#FF0000', open: false },
-  { number: 0, color: '#0000FF', open: false },
-  { number: 1, color: '#0000FF', open: false },
-  { number: 2, color: '#0000FF', open: false },
-  { number: 3, color: '#0000FF', open: false },
-  { number: 4, color: '#0000FF', open: false },
-  { number: 5, color: '#FFFF00', open: false },
-  { number: 6, color: '#0000FF', open: false },
-  { number: 7, color: '#0000FF', open: false },
-  { number: 8, color: '#0000FF', open: false },
-  { number: 9, color: '#0000FF', open: false },
-]
-
 const NumberCard = () => {
-  const [roomInfo, setRoomInfo] = useRecoilState(room)
-  const roomId = db.collection('test').doc().id
+  // const [roomInfo, setRoomInfo] = useRecoilState(room)
+  const roomInfo = useRoom()
 
-  let player1 = []
-  let player2 = []
-  let player3 = []
-  let player4 = []
-  let dealer = []
-
-  const setNumberCard = async (numberList: any) => {
-    while (numberList.length > 0) {
-      // 配列からランダムに取得
-      const random = Math.floor(Math.random() * numberList.length)
-      // それぞれのPlayerに数字カードを配る
-      const pushList = (player: any) => player.push(numberList[random])
-      if (player1.length < 4) pushList(player1)
-      else if (player2.length < 4) pushList(player2)
-      else if (player3.length < 4) pushList(player3)
-      else if (player4.length < 4) pushList(player4)
-      else if (dealer.length < 4) pushList(dealer)
-      else return null
-      // 配列から削除する
-      numberList.splice(random, 1)
-    }
-    // 数字の順番に並び替える
-    const sortHands = async (player: any) => {
-      await player.sort((a, b) => {
-        if (a.number !== b.number) {
-          if (a.number < b.number) return -1
-          if (a.number > b.number) return 1
-        }
-        if (a.number === b.number) {
-          if (a.color === '#FF0000') return -1
-          if (a.color === '#0000FF') return 1
-        }
-        return 0
-      })
-    }
-    await sortHands(player1)
-    await sortHands(player2)
-    await sortHands(player3)
-    await sortHands(player4)
-    await sortHands(dealer)
-    await testCards()
-  }
-
-  const testCards = async () => {
-    await db
-      .collection('test')
-      .doc('2GiL17k1OYYIZb7QvSIZ')
-      .set({
-        dealer: dealer,
-        player: {
-          p1: {
-            name: 'aaa',
-            isReady: false,
-            hands: player1,
-          },
-          p2: {
-            name: 'bbb',
-            isReady: false,
-            hands: player2,
-          },
-          p3: {
-            name: 'ccc',
-            isReady: false,
-            hands: player3,
-          },
-          p4: {
-            name: 'ddd',
-            isReady: false,
-            hands: player4,
-          },
-        },
-      })
-  }
-
-  const cardOpen = () => {
-    const newArr =
-      roomInfo.dealer &&
-      Object.values(roomInfo.dealer).map((data) => {
-        return { ...data, open: true }
-      })
-    db.collection('test')
-      .doc('2GiL17k1OYYIZb7QvSIZ')
-      .set({
-        ...roomInfo,
-        dealer: newArr,
-      })
-  }
-
-  useEffect(() => {
-    db.collection('test')
-      .doc('2GiL17k1OYYIZb7QvSIZ')
-      .onSnapshot((doc) => {
-        const roomDoc = doc.data() as Room
-        setRoomInfo(roomDoc)
-      })
-  }, [])
+  // const cardOpen = () => {
+  //   const newArr =
+  //     roomInfo.dealer &&
+  //     Object.values(roomInfo.dealer).map((data) => {
+  //       return { ...data, open: true }
+  //     })
+  //   db.collection('test')
+  //     .doc('2GiL17k1OYYIZb7QvSIZ')
+  //     .set({
+  //       ...roomInfo,
+  //       dealer: newArr,
+  //     })
+  // }
 
   return (
     <>
-      <button onClick={() => setNumberCard(numberList.slice())}>
+      {/* <button onClick={() => setNumberCard(numberList.slice())}>
         カードを配る
-      </button>
-      <button onClick={() => cardOpen()}>カードオープン</button>
+      </button> */}
+      {/* <button onClick={() => cardOpen()}>カードオープン</button> */}
       <StyledDealer>
         {roomInfo.dealer &&
           Object.entries(roomInfo.dealer).map(([key, data]) => {

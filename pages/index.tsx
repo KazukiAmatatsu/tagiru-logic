@@ -1,8 +1,17 @@
 import Head from 'next/head'
-import NumberCard from 'src/components/NumberCard'
-import QuestionCard from 'src/components/QuestionCard'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useRecoilState } from 'recoil'
+import { userState } from 'src/recoil/atom'
 
-export default function Home() {
+const Home: NextPage = () => {
+  const router = useRouter()
+  const [user, setUser] = useRecoilState(userState)
+  const handleStart = () => {
+    if (!user?.name) return alert('⚠️ゲームに使用する名前を決めてください')
+    setUser(user)
+    router.push({ pathname: '/Entrance' })
+  }
   return (
     <div>
       <Head>
@@ -11,14 +20,25 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1>
-          <p>Hello, Next.js</p>
-        </h1>
-        <QuestionCard />
-        <NumberCard />
+        <input
+          type='text'
+          placeholder='あなたの名前を入力'
+          value={user?.name || ''}
+          onChange={(e) => setUser({ ...user, name: e.currentTarget.value })}
+          onKeyDown={(e) => {
+            if (
+              ((e.ctrlKey && !e.metaKey) || (!e.ctrlKey && e.metaKey)) &&
+              e.key === 'Enter'
+            )
+              return handleStart()
+          }}
+        />
+        <button onClick={handleStart}>始める</button>
       </main>
 
       <footer></footer>
     </div>
   )
 }
+
+export default Home
