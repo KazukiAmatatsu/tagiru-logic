@@ -1,26 +1,24 @@
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-// import { getUser } from 'src/firebase/functions'
 import { userState } from 'src/recoil/atom'
-import { User } from 'src/type'
+import { useRecoilState } from 'recoil'
+import { useRoom } from 'src/recoil/hooks/useRoom'
+import { User } from 'src/types'
+import { useRouter } from 'next/router'
 
 export const useUser = (): User => {
+  const [user, setUser] = useRecoilState(userState)
+  const room = useRoom()
   const router = useRouter()
   const roomId = router.asPath.split('/')[1].split('?')[0]
-  const userId = router.query?.id as string
-
-  const [user, setUser] = useRecoilState(userState)
+  const key = Number(router.query?.key)
 
   useEffect(() => {
-    if (user) return
-    if (roomId === '[roomId]' || !userId) return
-    // console.log('useUser', roomId, userId);
-
-    // getUser({ userId, roomId }).then((res) => {
-    //   setUser(res)
-    // })
-  }, [userId])
+    // if (roomId === '[roomId]') return
+    setUser({
+      ...user,
+      key: key,
+    })
+  }, [key])
 
   return user
 }

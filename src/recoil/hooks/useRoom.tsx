@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
+import { db } from 'src/firebase/config'
+import { doc, onSnapshot } from 'firebase/firestore'
 import { roomState } from 'src/recoil/atom'
 import { useRecoilState } from 'recoil'
-import { doc, onSnapshot } from 'firebase/firestore'
-import { db } from 'src/firebase/config'
-import { Room } from 'src/type'
+import { Room } from 'src/types'
 import { useRouter } from 'next/router'
 
 export const useRoom = (): Room => {

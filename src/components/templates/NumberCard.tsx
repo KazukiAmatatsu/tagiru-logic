@@ -1,36 +1,29 @@
-import { db } from 'src/firebase/config'
-// import { room } from 'src/recoil/atom'
-// import { useRecoilState } from 'recoil'
 import { useRoom } from 'src/recoil/hooks/useRoom'
+import { useUser } from 'src/recoil/hooks/useUser'
 import styled from 'styled-components'
 
 const NumberCard = () => {
-  // const [roomInfo, setRoomInfo] = useRecoilState(room)
-  const roomInfo = useRoom()
+  const room = useRoom()
+  const user = useUser()
+  const playerRef = room.player
 
-  // const cardOpen = () => {
-  //   const newArr =
-  //     roomInfo.dealer &&
-  //     Object.values(roomInfo.dealer).map((data) => {
-  //       return { ...data, open: true }
-  //     })
-  //   db.collection('test')
-  //     .doc('2GiL17k1OYYIZb7QvSIZ')
-  //     .set({
-  //       ...roomInfo,
-  //       dealer: newArr,
-  //     })
-  // }
+  const handsList =
+    playerRef &&
+    Object.entries(playerRef).map(([key, player]) => {
+      if (Number(key) === user.key) {
+        const newArr = Object.values(player.hands).map((data) => {
+          return { ...data, open: true }
+        })
+        return { ...player, hands: newArr }
+      }
+      return player
+    })
 
   return (
     <>
-      {/* <button onClick={() => setNumberCard(numberList.slice())}>
-        カードを配る
-      </button> */}
-      {/* <button onClick={() => cardOpen()}>カードオープン</button> */}
       <StyledDealer>
-        {roomInfo.dealer &&
-          Object.entries(roomInfo.dealer).map(([key, data]) => {
+        {room.dealer &&
+          Object.entries(room.dealer).map(([key, data]) => {
             return (
               <StyledCard key={key} yellow={data.color === '#FFFF00'}>
                 {data.open ? (
@@ -49,9 +42,10 @@ const NumberCard = () => {
             )
           })}
       </StyledDealer>
+      <div>このカードを当ててください</div>
 
-      {roomInfo.player &&
-        Object.entries(roomInfo.player).map(([key, player]) => {
+      {handsList &&
+        Object.entries(handsList).map(([key, player]) => {
           return (
             <StyledPlayerCards key={key}>
               <div className='Cards'>
@@ -91,7 +85,8 @@ const StyledDealer = styled.div`
   width: 30rem;
   padding: 2rem;
   margin: 1rem;
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props) => props.theme.colors.yellow};
+  /* background-color: ${(props) => props.theme.background}; */
 `
 
 const StyledPlayerCards = styled.div`

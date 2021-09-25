@@ -1,16 +1,16 @@
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { db } from 'src/firebase/config'
-import { roomState } from 'src/recoil/atom'
-import { useRecoilValue } from 'recoil'
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { useRoom } from 'src/recoil/hooks/useRoom'
 import styled from 'styled-components'
 
 const QuestionCard = () => {
-  const roomInfo = useRecoilValue(roomState)
-  const roomRef = doc(db, 'rooms', roomInfo.roomId)
-  const queryRef = roomInfo.questions
-  const usedRef = roomInfo.usedCards
+  const room = useRoom()
+
+  const queryRef = room.questions
+  const usedRef = room.usedCards
 
   const usedCards = async (key: number) => {
+    const roomRef = doc(db, 'rooms', room.roomId)
     let usedCard = ''
     // 次の質問カードの位置を取得
     const newCard = queryRef.findIndex((item) => !item.open)

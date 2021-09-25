@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   const handleStart = () => {
     if (!user?.name) return alert('⚠️ゲームに使用する名前を決めてください')
     setUser(user)
-    router.push({ pathname: '/Entrance' })
+    router.push({ pathname: '/entrance' })
   }
   return (
     <div>

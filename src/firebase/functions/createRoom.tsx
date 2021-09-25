@@ -1,22 +1,22 @@
 import { db } from 'src/firebase/config'
 import { collection, doc, setDoc } from 'firebase/firestore'
 import { numberList, questionsList4Players } from 'src/components/data'
-import { Hand, Room } from 'src/type'
-
-const roomRef = collection(db, 'rooms')
-/* roomIdを指定しない場合はReferenceを作成して返す */
-const roomDoc = (roomId?: string) => {
-  if (roomId) {
-    return doc(roomRef, roomId)
-  }
-  return doc(roomRef)
-}
+import { Hand, Room } from 'src/types'
 
 export const createRoom = async (input: {
   name: string
-  password: number
+  roomName: string
+  password: string
 }): Promise<string> => {
-  const { name, password } = input
+  const { name, roomName, password } = input
+  const roomRef = collection(db, 'rooms')
+  /* roomIdを指定しない場合はReferenceを作成して返す */
+  const roomDoc = (roomId?: string) => {
+    if (roomId) {
+      return doc(roomRef, roomId)
+    }
+    return doc(roomRef)
+  }
 
   /* 数字タイル */
   let player1 = []
@@ -76,6 +76,7 @@ export const createRoom = async (input: {
   const newRoomRef = roomDoc()
   const initialRoomState: Room = {
     roomId: newRoomRef.id,
+    roomName,
     password,
     dealer: dealer,
     player: [
@@ -102,11 +103,8 @@ export const createRoom = async (input: {
     ],
     questions: openQuestionsList,
     usedCards: [],
-    isGaming: false,
-    finished: false,
-    loading: false,
+    state: 'waiting',
   }
-
   await setDoc(newRoomRef, initialRoomState)
   return newRoomRef.id
 }

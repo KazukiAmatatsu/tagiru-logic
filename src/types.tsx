@@ -1,6 +1,6 @@
 export type User = {
   name: string
-  playerId: string
+  key: number
 }
 
 export type Hand = {
@@ -20,14 +20,21 @@ export type Question = {
   text: any
 }
 
+export type Phase = 'waiting' | 'playing' | 'finish'
+
 export type Room = {
   readonly roomId: string
-  password: number
+  readonly roomName: string
+  readonly password: string
   dealer: Hand[] | undefined
   player: Player[]
   questions: Question[]
   usedCards: []
-  isGaming: boolean
-  finished: boolean
-  loading: boolean
+  state: Phase
+}
+
+export type Rooms = {
+  roomId: string
+  roomName: string
+  password: string
 }
