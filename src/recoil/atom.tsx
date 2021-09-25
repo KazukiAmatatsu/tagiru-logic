@@ -1,22 +1,35 @@
 import { atom } from 'recoil'
-import { Room } from 'src/type'
+import { User, Room, Rooms } from 'src/types'
 
-export const room = atom<Room>({
+export const userState = atom<User>({
+  key: 'user_state',
+  default: {
+    name: '',
+    key: null,
+  },
+})
+
+export const roomState = atom<Room>({
   key: 'room_state',
   default: {
     roomId: '',
-    inviteCode: '',
-    dealer: null,
-    player: {},
-    questions: [
-      {
-        open: false,
-        text: '',
-      },
-    ],
+    roomName: '',
+    password: '',
+    dealer: undefined,
+    player: undefined,
+    questions: undefined,
     usedCards: [],
-    isGaming: false,
-    finished: false,
-    loading: false,
+    state: 'waiting',
   },
+})
+
+export const rooms = atom<Rooms[]>({
+  key: 'roomsList',
+  default: [
+    {
+      roomId: '',
+      roomName: '',
+      password: '',
+    },
+  ],
 })
