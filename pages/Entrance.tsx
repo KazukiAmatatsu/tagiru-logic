@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import Entrance from 'src/components/display/Entrance'
+import Entrance from 'src/components/Page/Entrance/Entrance'
 import styled from 'styled-components'
 
 type EntrancePageProps = {

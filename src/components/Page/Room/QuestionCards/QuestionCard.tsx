@@ -9,7 +9,7 @@ const QuestionCard = () => {
   const queryRef = room.questions
   const usedRef = room.usedCards
 
-  const usedCards = async (key: number) => {
+  const useCard = async (key: number) => {
     const roomRef = doc(db, 'rooms', room.roomId)
     let usedCard = ''
     // 次の質問カードの位置を取得
@@ -31,7 +31,7 @@ const QuestionCard = () => {
   }
 
   return (
-    <StyledQuestionCards>
+    <StyledQuestionCard>
       <div className='usedCardList'>
         {usedRef &&
           usedRef.map((item, index) => {
@@ -60,7 +60,7 @@ const QuestionCard = () => {
               return (
                 <div
                   key={index}
-                  onClick={() => usedCards(key)}
+                  onClick={() => useCard(key)}
                   className='questionCard text_center'
                 >
                   {item.text}
@@ -70,13 +70,13 @@ const QuestionCard = () => {
             return null
           })}
       </div>
-    </StyledQuestionCards>
+    </StyledQuestionCard>
   )
 }
 
 export default QuestionCard
 
-const StyledQuestionCards = styled.div`
+const StyledQuestionCard = styled.div`
   margin: 0 5rem;
   .openCardList {
     display: flex;

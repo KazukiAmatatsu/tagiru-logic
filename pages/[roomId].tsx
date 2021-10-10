@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import PlayingGame from 'src/components/display/PlayingGame'
+import PlayingGame from 'src/components/Page/Room/PlayingGame'
 import styled from 'styled-components'
 
 type PlayingRoomPageProps = {

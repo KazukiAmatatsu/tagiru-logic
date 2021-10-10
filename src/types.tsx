@@ -26,7 +26,7 @@ export type Room = {
   readonly roomId: string
   readonly roomName: string
   readonly password: string
-  dealer: Hand[] | undefined
+  dealer: Hand[]
   player: Player[]
   questions: Question[]
   usedCards: []
