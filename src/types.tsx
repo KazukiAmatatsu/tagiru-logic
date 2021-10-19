@@ -20,6 +20,16 @@ export type Question = {
   text: any
 }
 
+export type Answer = {
+  key: number
+  name: string
+  answer: string
+}
+
+export type UsedCards = {
+  [text: string]: Answer[]
+}
+
 export type Phase = 'waiting' | 'playing' | 'finish'
 
 export type Room = {
@@ -29,7 +39,7 @@ export type Room = {
   dealer: Hand[]
   player: Player[]
   questions: Question[]
-  usedCards: []
+  usedCards: UsedCards[]
   state: Phase
 }
 

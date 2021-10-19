@@ -8,9 +8,7 @@ const Dealer: FC = () => {
   return (
     <StyledDealer>
       <div className='center_text title'>このカードを当ててください</div>
-      <div className='jcsb'>
-        <NumberCard hands={room.dealer} />
-      </div>
+      <NumberCard hands={room.dealer} />
     </StyledDealer>
   )
 }

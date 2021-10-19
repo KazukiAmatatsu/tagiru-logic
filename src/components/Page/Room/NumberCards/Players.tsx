@@ -32,9 +32,7 @@ const Players: FC = () => {
         Object.entries(handsList).map(([key, player]) => {
           return (
             <StyledPlayers key={key}>
-              <div className='jcsb'>
-                <NumberCard hands={player.hands} />
-              </div>
+              <NumberCard hands={player.hands} />
               <div className='center_text playerName '>{player.name}</div>
             </StyledPlayers>
           )

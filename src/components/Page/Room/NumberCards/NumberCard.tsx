@@ -1,4 +1,4 @@
-import { ReactNode, VFC } from 'react'
+import { VFC } from 'react'
 import { Hand } from 'src/types'
 import styled from 'styled-components'
 
@@ -8,7 +8,7 @@ type NumberCardProps = {
 
 const NumberCard: VFC<NumberCardProps> = ({ hands }) => {
   return (
-    <>
+    <div className='jcsb'>
       {hands &&
         Object.entries(hands).map(([key, data]) => {
           return (
@@ -28,7 +28,7 @@ const NumberCard: VFC<NumberCardProps> = ({ hands }) => {
             </StyledNumberCard>
           )
         })}
-    </>
+    </div>
   )
 }
 
