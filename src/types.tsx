@@ -21,7 +21,6 @@ export type Question = {
 }
 
 export type Answer = {
-  key: number
   name: string
   answer: string
 }

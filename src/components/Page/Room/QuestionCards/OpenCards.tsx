@@ -11,13 +11,13 @@ const OpenCards: FC = () => {
 
   const choiceCard = async (key: number) => {
     const roomRef = doc(db, 'rooms', room.roomId)
-    let usedCard = ''
+    let cardText = ''
     // 次の質問カードの位置を取得
     const newCard = queryRef.findIndex((item) => !item.open)
     // 新しい配列を作ってopenカードを変更
     const changeCards = queryRef.map((item, index) => {
       if (index === newCard) return { ...item, open: true }
-      if (index === key) usedCard = item.text
+      if (index === key) cardText = item.text
       return item
     })
     // カードを削除
@@ -26,7 +26,24 @@ const OpenCards: FC = () => {
     })
     await updateDoc(roomRef, {
       questions: newCards,
-      [`useCards.${usedCard}`]: arrayUnion(),
+      [`usedCards.${cardText}`]: [
+        {
+          name: room.player[0].name,
+          answer: '',
+        },
+        {
+          name: room.player[1].name,
+          answer: '',
+        },
+        {
+          name: room.player[2].name,
+          answer: '',
+        },
+        {
+          name: room.player[3].name,
+          answer: '',
+        },
+      ],
     })
   }
 
@@ -56,11 +73,15 @@ const OpenCards: FC = () => {
 export default OpenCards
 
 const StyledOpenCards = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  user-select: none;
+  width: 76.8rem; // questionCard1枚のwidthが256 * 3
   .questionCard {
     width: 20rem;
     height: 10rem;
     padding: 1rem;
-    margin: 2rem;
+    margin: 1rem;
     font-size: 2rem;
     font-weight: bold;
     white-space: pre-wrap;
