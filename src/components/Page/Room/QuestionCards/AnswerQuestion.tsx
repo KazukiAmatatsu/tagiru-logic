@@ -9,6 +9,10 @@ type AnswerQuestionProps = {
   cardText: string
 }
 
+/*
+  モーダルにする
+  カードテキストを受け取って入力できるフォーム
+*/
 const AnswerQuestion: VFC<AnswerQuestionProps> = ({ cardText }) => {
   const [answer, setAnswer] = useState<string>('')
   const room = useRoom()

@@ -3,23 +3,33 @@ import { useRoom } from 'src/recoil/hooks/useRoom'
 import AnswerQuestion from 'src/components/Page/Room/QuestionCards/AnswerQuestion'
 import styled from 'styled-components'
 
+/*
+  チャット形式で表示させる
+*/
+
 const UsedCards: FC = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
   const room = useRoom()
   const usedCards = room.usedCards
-  const [isOpen, setIsOpen] = useState<boolean>(false)
   return (
     <StyledUsedCards>
       {usedCards &&
-        Object.entries(usedCards).map(([key, data]) => {
-          console.log(key)
+        Object.entries(usedCards).map(([text, data]) => {
+          console.log(text)
           console.log(data)
           return (
-            <>
-              <div onClick={() => setIsOpen(!isOpen)}>{key}</div>
-              {isOpen ? <AnswerQuestion cardText={key} /> : <></>}
-              {/* <div>{data.name}</div>
-              <div>{data.answer}</div> */}
-            </>
+            <div>
+              <div onClick={() => setIsOpen(!isOpen)}>{text}</div>
+              {data.map((item, index) => {
+                return (
+                  <div key={index}>
+                    {item.name}:{item.answer}
+                  </div>
+                )
+              })}
+              {/* {isOpen ? <AnswerQuestion cardText={text} /> : <></>} */}
+              <br />
+            </div>
           )
         })}
     </StyledUsedCards>

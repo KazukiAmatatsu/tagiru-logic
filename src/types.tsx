@@ -20,13 +20,16 @@ export type Question = {
   text: any
 }
 
+/* UsedCardsのtypeを考え直す */
+
 export type Answer = {
   name: string
   answer: string
 }
 
 export type UsedCards = {
-  [text: string]: Answer[]
+  [text: string]: Answer[] | any
+  /* UsedCardsでmapするとエラー出るのでany */
 }
 
 export type Phase = 'waiting' | 'playing' | 'finish'
