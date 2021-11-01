@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import PlayingGame from 'src/components/Page/Room/PlayingGame'
+import Room from 'src/components/Page/Room'
 import { testRoom } from 'src/firebase/functions/testRoom'
 import styled from 'styled-components'
 
@@ -16,7 +16,7 @@ const RoomPage: NextPage<PlayingRoomPageProps> = ({ className }) => {
       >
         部屋リセット
       </button>
-      <PlayingGame />
+      <Room />
     </StyledPlayingRoomPage>
   )
 }

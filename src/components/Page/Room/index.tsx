@@ -1,10 +1,27 @@
 import { FC } from 'react'
+import {
+  OpenCards,
+  UsedCards,
+  QuestionCard,
+} from 'src/components/Page/Room/QuestionCards'
+import { Dealer, Players } from 'src/components/Page/Room/NumberCards'
+import { MessageList, MessageCard } from 'src/components/Page/Room/Chat'
 import styled from 'styled-components'
 
-const index: FC = () => {
-  return <Styledindex></Styledindex>
+const Room: FC = () => {
+  return (
+    <StyledRoom>
+      <MessageList />
+      <MessageCard />
+      {/* <QuestionCard /> */}
+      {/* <OpenCards /> */}
+      {/* <UsedCards /> */}
+      {/* <Dealer /> */}
+      {/* <Players />s */}
+    </StyledRoom>
+  )
 }
 
-export default index
+export default Room
 
-const Styledindex = styled.div``
+const StyledRoom = styled.div``

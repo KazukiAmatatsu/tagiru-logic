@@ -24,27 +24,27 @@ const OpenCards: FC = () => {
     const newCards = changeCards.filter((item, index) => {
       if (index !== key) return item
     })
-    await updateDoc(roomRef, {
-      questions: newCards,
-      [`usedCards.${cardText}`]: [
-        {
-          name: room.player[0].name,
-          answer: '',
-        },
-        {
-          name: room.player[1].name,
-          answer: '',
-        },
-        {
-          name: room.player[2].name,
-          answer: '',
-        },
-        {
-          name: room.player[3].name,
-          answer: '',
-        },
-      ],
-    })
+    // await updateDoc(roomRef, {
+    //   questions: newCards,
+    //   [`usedCards.${cardText}`]: [
+    //     {
+    //       name: room.player[0].name,
+    //       answer: '',
+    //     },
+    //     {
+    //       name: room.player[1].name,
+    //       answer: '',
+    //     },
+    //     {
+    //       name: room.player[2].name,
+    //       answer: '',
+    //     },
+    //     {
+    //       name: room.player[3].name,
+    //       answer: '',
+    //     },
+    //   ],
+    // })
   }
 
   return (
