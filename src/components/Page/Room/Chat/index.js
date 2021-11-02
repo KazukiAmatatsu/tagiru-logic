@@ -1,4 +1,5 @@
-import MessageList from './MessageList'
-import MessageCard from './MessageCard'
+import ChatList from './ChatList'
+import ChatCard from './ChatCard'
+import PostForm from './PostForm'
 
-export { MessageList, MessageCard }
+export { ChatList, ChatCard, PostForm }

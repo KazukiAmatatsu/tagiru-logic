@@ -102,7 +102,7 @@ export const createRoom = async (input: {
       },
     ],
     questions: openQuestionsList,
-    usedCards: [],
+    chat: [],
     state: 'waiting',
   }
   await setDoc(newRoomRef, initialRoomState)

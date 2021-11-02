@@ -18,7 +18,7 @@ export const roomState = atom<Room>({
     dealer: [],
     player: [],
     questions: [],
-    usedCards: [],
+    chat: [],
     state: 'waiting',
   },
 })

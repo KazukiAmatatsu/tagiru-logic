@@ -22,10 +22,8 @@ const AnswerQuestion: VFC<AnswerQuestionProps> = ({ cardText }) => {
     key: 0,
   }
   const queryRef = room.questions
-  const usedRef = room.usedCards
   const roomRef = doc(db, 'rooms', room.roomId)
 
-  console.log(usedRef)
   const answerHandler = async () => {
     console.log('投稿した')
 

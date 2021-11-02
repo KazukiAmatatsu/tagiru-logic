@@ -20,16 +20,16 @@ export type Question = {
   text: any
 }
 
-/* UsedCardsのtypeを考え直す */
-
 export type Answer = {
   name: string
   answer: string
 }
 
-export type UsedCards = {
-  [text: string]: Answer[] | any
-  /* UsedCardsでmapするとエラー出るのでany */
+export type Chat = {
+  id: number
+  name: string
+  content: string
+  sendTime: any
 }
 
 export type Phase = 'waiting' | 'playing' | 'finish'
@@ -41,7 +41,7 @@ export type Room = {
   dealer: Hand[]
   player: Player[]
   questions: Question[]
-  usedCards: UsedCards[]
+  chat: Chat[]
   state: Phase
 }
 

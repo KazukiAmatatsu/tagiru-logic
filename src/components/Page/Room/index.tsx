@@ -1,21 +1,15 @@
 import { FC } from 'react'
-import {
-  OpenCards,
-  UsedCards,
-  QuestionCard,
-} from 'src/components/Page/Room/QuestionCards'
+import { OpenCards } from 'src/components/Page/Room/QuestionCards'
 import { Dealer, Players } from 'src/components/Page/Room/NumberCards'
-import { MessageList, MessageCard } from 'src/components/Page/Room/Chat'
+import { ChatList, PostForm } from 'src/components/Page/Room/Chat'
 import styled from 'styled-components'
 
 const Room: FC = () => {
   return (
     <StyledRoom>
-      <MessageList />
-      <MessageCard />
-      {/* <QuestionCard /> */}
+      <PostForm />
+      <ChatList />
       {/* <OpenCards /> */}
-      {/* <UsedCards /> */}
       {/* <Dealer /> */}
       {/* <Players />s */}
     </StyledRoom>
