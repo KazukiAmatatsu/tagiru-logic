@@ -5,7 +5,6 @@ import styled from 'styled-components'
 
 const ChatList: FC = () => {
   const room = useRoom()
-  // サブコレクションから取ってくる
 
   return (
     <StyledChatList>

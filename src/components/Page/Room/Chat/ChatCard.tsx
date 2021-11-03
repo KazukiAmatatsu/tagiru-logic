@@ -8,11 +8,12 @@ type ChatCardProps = {
 }
 
 const ChatCard: VFC<ChatCardProps> = ({ className, data }) => {
-  const { name, content } = data
+  const { name, content, date, time } = data
 
   return (
     <StyledChatCard className={`${className}`}>
       {name}：{content}
+      {date} {time}
     </StyledChatCard>
   )
 }

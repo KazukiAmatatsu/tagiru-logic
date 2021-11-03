@@ -28,6 +28,8 @@ export type Answer = {
 export type Chat = {
   name: string
   content: string
+  date: string
+  time: string
 }
 
 export type Phase = 'waiting' | 'playing' | 'finish'

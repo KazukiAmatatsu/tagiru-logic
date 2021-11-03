@@ -9,11 +9,25 @@ export const postChat = async (input: {
   const { name, content, roomId } = input
   const roomRef = doc(db, 'rooms', roomId)
 
-  // サブコレクションに登録
+  // Moment.jsなるものがあるらしい
+  const dt = new Date()
+  const week = ['日', '月', '火', '水', '木', '金', '土']
+
+  const date = `
+  ${('00' + (dt.getMonth() + 1)).slice(-2)}/${('00' + dt.getDate()).slice(-2)}
+  (${week[dt.getDay()]})
+  `
+
+  const time = `
+  ${('00' + dt.getHours()).slice(-2)}:${('00' + dt.getMinutes()).slice(-2)}
+  `
+
   await updateDoc(roomRef, {
     chat: arrayUnion({
       name,
       content,
+      date,
+      time,
     }),
   })
   return null
