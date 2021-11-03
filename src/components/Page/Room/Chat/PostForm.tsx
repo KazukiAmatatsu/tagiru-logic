@@ -1,26 +1,45 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useUser } from 'src/recoil/hooks/useUser'
-import { Chat } from 'src/types'
+import { useRoom } from 'src/recoil/hooks/useRoom'
+import { useForm } from 'react-hook-form'
+import { postChat } from 'src/firebase/functions/postChat'
 import styled from 'styled-components'
 
 const PostForm: FC = () => {
-  const [content, setContent] = useState<string>('')
+  const {
+    register,
+    // setValue,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<{ content: string }>()
   const user = useUser()
-  console.log(content)
+  const room = useRoom()
+
+  const post = handleSubmit((data) => {
+    postChat({
+      name: user.name,
+      content: data.content,
+      roomId: room.roomId,
+    }),
+      reset()
+  })
 
   return (
-    <StyledPostForm>
+    <StyledPostForm onSubmit={post}>
       <input
-        id='content'
         type='text'
         placeholder='メッセージを入力'
-        // value={ || ''}
-        onChange={(e) => setContent(e.currentTarget.value)}
+        {...register('content', { required: true })}
       />
+      {errors.content && (
+        <span className='em'>メッセージを入力してください</span>
+      )}
+      <input type='submit' />
     </StyledPostForm>
   )
 }
 
 export default PostForm
 
-const StyledPostForm = styled.div``
+const StyledPostForm = styled.form``

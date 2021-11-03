@@ -5,13 +5,13 @@ import styled from 'styled-components'
 
 const ChatList: FC = () => {
   const room = useRoom()
-  console.log(room.chat)
+  // サブコレクションから取ってくる
 
   return (
     <StyledChatList>
-      {room.chat.map((data) => {
-        return <ChatCard key={data.id} data={data} />
-      })}
+      {room.chat.map((data, index) => (
+        <ChatCard key={index} data={data} />
+      ))}
     </StyledChatList>
   )
 }

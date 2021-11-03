@@ -18,6 +18,7 @@
     "next": "11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.18.1",
     "recoil": "^0.4.1",
     "styled-components": "^5.3.1",
     "styled-reset": "^4.3.4"

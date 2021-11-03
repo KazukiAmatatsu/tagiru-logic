@@ -26,10 +26,8 @@ export type Answer = {
 }
 
 export type Chat = {
-  id: number
   name: string
   content: string
-  sendTime: any
 }
 
 export type Phase = 'waiting' | 'playing' | 'finish'

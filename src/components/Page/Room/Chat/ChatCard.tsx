@@ -7,13 +7,16 @@ type ChatCardProps = {
   data: Chat
 }
 
-export const ChatCard: VFC<ChatCardProps> = ({ className, data }) => {
-  const { id, name, content, sendTime } = data
+const ChatCard: VFC<ChatCardProps> = ({ className, data }) => {
+  const { name, content } = data
+
   return (
     <StyledChatCard className={`${className}`}>
-      {name}:{content}
+      {name}：{content}
     </StyledChatCard>
   )
 }
+
+export default ChatCard
 
 const StyledChatCard = styled.div``
