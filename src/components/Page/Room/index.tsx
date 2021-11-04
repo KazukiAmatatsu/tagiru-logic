@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { OpenCards } from 'src/components/Page/Room/QuestionCards'
+import QuestionCard from 'src/components/Page/Room/QuestionCards/QuestionCard'
 import { Dealer, Players } from 'src/components/Page/Room/NumberCards'
 import { ChatList, PostForm } from 'src/components/Page/Room/Chat'
 import styled from 'styled-components'
@@ -7,9 +7,9 @@ import styled from 'styled-components'
 const Room: FC = () => {
   return (
     <StyledRoom>
+      <QuestionCard />
       <PostForm />
       <ChatList />
-      {/* <OpenCards /> */}
       {/* <Dealer /> */}
       {/* <Players />s */}
     </StyledRoom>

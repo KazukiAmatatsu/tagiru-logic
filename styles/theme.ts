@@ -6,6 +6,12 @@ export const theme = {
     blue: '#0000FF',
     yellow: '#FFFF00',
   },
+  line: {
+    background: '#7494C0',
+    green: '#06c755',
+    black: '#000',
+    white: '#fff',
+  },
 }
 
 type Theme = typeof theme

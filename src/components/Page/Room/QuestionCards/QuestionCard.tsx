@@ -1,33 +1,14 @@
 import { FC } from 'react'
-import { db } from 'src/firebase/config'
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
 import { useRoom } from 'src/recoil/hooks/useRoom'
+import { selectQuestion } from 'src/firebase/functions/selectQuestion'
 import styled from 'styled-components'
 
-const OpenCards: FC = () => {
+const QuestionCard: FC = () => {
   const room = useRoom()
-
   const queryRef = room.questions
 
-  const choiceCard = async (key: number) => {
-    const roomRef = doc(db, 'rooms', room.roomId)
-    let cardText = ''
-    // 次の質問カードの位置を取得
-    const newCard = queryRef.findIndex((item) => !item.open)
-    // 新しい配列を作ってopenカードを変更
-    const changeCards = queryRef.map((item, index) => {
-      if (index === newCard) return { ...item, open: true }
-      if (index === key) cardText = item.text
-      return item
-    })
-    // カードを削除
-    const newCards = changeCards.filter((item, index) => {
-      if (index !== key) return item
-    })
-  }
-
   return (
-    <StyledOpenCards>
+    <StyledQuestionCard>
       {queryRef &&
         queryRef.map((item, index) => {
           // indexをstring型からnumber型に変換
@@ -35,8 +16,14 @@ const OpenCards: FC = () => {
           if (item.open) {
             return (
               <div
-                key={index}
-                onClick={() => choiceCard(key)}
+                key={key}
+                onClick={() =>
+                  selectQuestion({
+                    key,
+                    questions: queryRef,
+                    roomId: room.roomId,
+                  })
+                }
                 className='questionCard center_text'
               >
                 {item.text}
@@ -45,13 +32,13 @@ const OpenCards: FC = () => {
           }
           return null
         })}
-    </StyledOpenCards>
+    </StyledQuestionCard>
   )
 }
 
-export default OpenCards
+export default QuestionCard
 
-const StyledOpenCards = styled.div`
+const StyledQuestionCard = styled.div`
   display: flex;
   flex-wrap: wrap;
   user-select: none;
