@@ -9,29 +9,34 @@ const QuestionCard: FC = () => {
 
   return (
     <StyledQuestionCard>
-      {queryRef &&
-        queryRef.map((item, index) => {
-          // indexをstring型からnumber型に変換
-          const key = Number(index)
-          if (item.open) {
-            return (
-              <div
-                key={key}
-                onClick={() =>
-                  selectQuestion({
-                    key,
-                    questions: queryRef,
-                    roomId: room.roomId,
-                  })
-                }
-                className='questionCard center_text'
-              >
-                {item.text}
-              </div>
-            )
-          }
-          return null
-        })}
+      <div className='deck'>
+        残り枚数<span> {queryRef.length} </span>枚
+      </div>
+      <div className='openCards'>
+        {queryRef &&
+          queryRef.map((item, index) => {
+            // indexをstring型からnumber型に変換
+            const key = Number(index)
+            if (item.open) {
+              return (
+                <div
+                  key={key}
+                  onClick={() =>
+                    selectQuestion({
+                      key,
+                      questions: queryRef,
+                      roomId: room.roomId,
+                    })
+                  }
+                  className='questionCard center_text'
+                >
+                  {item.text}
+                </div>
+              )
+            }
+            return null
+          })}
+      </div>
     </StyledQuestionCard>
   )
 }
@@ -39,10 +44,23 @@ const QuestionCard: FC = () => {
 export default QuestionCard
 
 const StyledQuestionCard = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  user-select: none;
+  background-color: ${(props) => props.theme.background};
+  padding: 2rem;
   width: 76.8rem; // questionCard1枚のwidthが256 * 3
+  .deck {
+    font-size: 1.6rem;
+    text-align: right;
+    margin-bottom: 0.5rem;
+    span {
+      font-weight: bold;
+      font-size: 2rem;
+    }
+  }
+  .openCards {
+    display: flex;
+    flex-wrap: wrap;
+    user-select: none;
+  }
   .questionCard {
     width: 20rem;
     height: 10rem;
