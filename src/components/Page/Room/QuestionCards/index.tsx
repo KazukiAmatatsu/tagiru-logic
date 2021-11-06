@@ -1,10 +1,13 @@
 import { FC } from 'react'
 import { useRoom } from 'src/recoil/hooks/useRoom'
+import { useUser } from 'src/recoil/hooks/useUser'
 import { selectQuestion } from 'src/firebase/functions/selectQuestion'
 import styled from 'styled-components'
 
 const QuestionCard: FC = () => {
   const room = useRoom()
+  const user = useUser()
+  const name = user.name
   const queryRef = room.questions
 
   return (
@@ -24,6 +27,7 @@ const QuestionCard: FC = () => {
                   onClick={() =>
                     selectQuestion({
                       key,
+                      name,
                       questions: queryRef,
                       roomId: room.roomId,
                     })
@@ -45,8 +49,8 @@ export default QuestionCard
 
 const StyledQuestionCard = styled.div`
   background-color: ${(props) => props.theme.background};
+  width: 66rem; // questionCard1枚のwidthが216 * 3
   padding: 2rem;
-  width: 76.8rem; // questionCard1枚のwidthが256 * 3
   .deck {
     font-size: 1.6rem;
     text-align: right;
@@ -62,11 +66,11 @@ const StyledQuestionCard = styled.div`
     user-select: none;
   }
   .questionCard {
-    width: 20rem;
+    width: 16rem;
     height: 10rem;
     padding: 1rem;
     margin: 1rem;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: bold;
     white-space: pre-wrap;
     text-shadow: #fff 2px 0, #fff -2px 0, #fff 0 -2px, #fff 0 2px, #fff 2px 2px,

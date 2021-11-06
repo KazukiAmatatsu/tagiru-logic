@@ -41,27 +41,28 @@ const StyledNumberCard = styled.div<{ yellow: boolean }>`
   position: relative;
   border-radius: 0.5rem;
   .card_color {
-    width: 4rem;
-    height: 4rem;
+    width: 5rem;
+    height: 5rem;
     position: absolute;
     margin: auto;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    border-radius: 2rem;
+    border-radius: 50%;
   }
   .card_num {
     color: ${(props) => (props.yellow ? '#333' : '#fff')};
-    line-height: 4rem;
+    line-height: 5rem;
     text-align: center;
     font-size: 2.5rem;
     font-weight: bold;
   }
   .text {
-    font-size: 0.1rem;
     color: #fff;
+    font-size: 0.1rem;
     line-height: 8rem;
+    font-weight: bold;
     text-align: center;
   }
 `

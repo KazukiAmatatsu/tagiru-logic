@@ -16,13 +16,13 @@ const Dealer: FC = () => {
 export default Dealer
 
 const StyledDealer = styled.div`
-  width: 30rem;
+  width: 27.5rem;
   padding: 2rem;
-  margin: 1rem;
-  background-color: ${(props) => props.theme.colors.yellow};
+  margin-top: 3rem;
+  background-color: ${(props) => props.theme.background};
   .title {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 `

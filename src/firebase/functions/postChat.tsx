@@ -19,6 +19,7 @@ export const postChat = async (input: {
     chat: arrayUnion({
       name,
       content,
+      question: false,
       date,
       time,
     }),

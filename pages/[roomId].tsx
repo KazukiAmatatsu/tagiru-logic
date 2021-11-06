@@ -10,12 +10,12 @@ type PlayingRoomPageProps = {
 const RoomPage: NextPage<PlayingRoomPageProps> = ({ className }) => {
   return (
     <StyledPlayingRoomPage className={`${className}`}>
-      <h1>PlayingRoom</h1>
+      {/* <h1>PlayingRoom</h1>
       <button
         onClick={() => testRoom({ roomName: 'テストルーム', password: '1111' })}
       >
         部屋リセット
-      </button>
+      </button> */}
       <Room />
     </StyledPlayingRoomPage>
   )

@@ -11,6 +11,7 @@ export type Hand = {
 
 export type Player = {
   name: string
+  color: string
   isReady: boolean
   hands: Hand[] | undefined
 }
@@ -28,6 +29,7 @@ export type Answer = {
 export type Chat = {
   name: string
   content: string
+  question: boolean
   date: string
   time: string
 }

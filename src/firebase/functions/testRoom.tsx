@@ -83,23 +83,27 @@ export const testRoom = async (input: {
     dealer: dealer,
     player: [
       {
-        name: 'testUser',
+        name: 'textUser',
         isReady: false,
+        color: 'rgba(255,51,0,0.5)',
         hands: player1,
       },
       {
-        name: 'player1',
+        name: 'User1',
         isReady: false,
+        color: 'rgba(0,0,255,0.5)',
         hands: player2,
       },
       {
-        name: 'player2',
+        name: 'User2',
         isReady: false,
+        color: 'rgba(255,255,0,0.5)',
         hands: player3,
       },
       {
-        name: 'player3',
+        name: 'User3',
         isReady: false,
+        color: 'rgba(0,255,0,0.5)',
         hands: player4,
       },
     ],

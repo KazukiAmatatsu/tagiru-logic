@@ -6,10 +6,11 @@ import 'moment/locale/ja'
 
 export const selectQuestion = async (input: {
   key: number
+  name: string
   questions: Question[]
   roomId: string
 }): Promise<string> => {
-  const { key, questions, roomId } = input
+  const { key, name, questions, roomId } = input
   const roomRef = doc(db, 'rooms', roomId)
 
   const now = moment()
@@ -22,7 +23,7 @@ export const selectQuestion = async (input: {
   // 新しい配列を作ってopenカードを変更
   const changeCards = questions.map((item, index) => {
     if (index === newCard) return { ...item, open: true }
-    if (index === key) cardText = item.text.replace(/\r?\n/g, '')
+    if (index === key) cardText = item.text
     return item
   })
   // カードを削除
@@ -32,8 +33,9 @@ export const selectQuestion = async (input: {
   await updateDoc(roomRef, {
     questions: newCards,
     chat: arrayUnion({
-      name: '質問カード',
+      name,
       content: cardText,
+      question: true,
       date,
       time,
     }),

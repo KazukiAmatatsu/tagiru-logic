@@ -56,6 +56,8 @@ export const createRoom = async (input: {
   await sortHands(player4)
   await sortHands(dealer)
 
+  console.log(player1)
+
   /* 質問カード */
   // 4人プレイの場合は質問カードリストの一部が変わる
   const questionsList = questionsList4Players
@@ -83,21 +85,25 @@ export const createRoom = async (input: {
       {
         name: name,
         isReady: false,
+        color: 'rgba(255,51,0,0.5)',
         hands: player1,
       },
       {
         name: '',
         isReady: false,
+        color: 'rgba(0,0,255,0.5)',
         hands: player2,
       },
       {
         name: '',
         isReady: false,
+        color: 'rgba(255,255,0,0.5)',
         hands: player3,
       },
       {
         name: '',
         isReady: false,
+        color: 'rgba(0,255,0,0.5)',
         hands: player4,
       },
     ],
