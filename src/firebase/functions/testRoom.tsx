@@ -3,20 +3,22 @@ import { collection, doc, setDoc } from 'firebase/firestore'
 import { numberList, questionsList4Players } from 'src/components/data'
 import { Hand, Room } from 'src/types'
 
-export const createRoom = async (input: {
-  name: string
+export const testRoom = async (input: {
+  name?: string
   roomName: string
   password: string
 }): Promise<string> => {
   const { name, roomName, password } = input
   const roomRef = collection(db, 'rooms')
-  /* roomIdを指定しない場合はReferenceを作成して返す */
-  const roomDoc = (roomId?: string) => {
-    if (roomId) {
-      return doc(roomRef, roomId)
-    }
-    return doc(roomRef)
-  }
+  const roomId = '3yn9OXjeFDsKF2cyFayS'
+  const roomDoc = doc(roomRef, roomId)
+  // /* roomIdを指定しない場合はReferenceを作成して返す */
+  // const roomDoc = (roomId?: string) => {
+  //   if (roomId) {
+  //     return doc(roomRef, roomId)
+  //   }
+  //   return doc(roomRef)
+  // }
 
   /* 数字タイル */
   let player1 = []
@@ -56,8 +58,6 @@ export const createRoom = async (input: {
   await sortHands(player4)
   await sortHands(dealer)
 
-  console.log(player1)
-
   /* 質問カード */
   // 4人プレイの場合は質問カードリストの一部が変わる
   const questionsList = questionsList4Players
@@ -75,33 +75,33 @@ export const createRoom = async (input: {
     return item
   })
 
-  const newRoomRef = roomDoc()
+  // const newRoomRef = roomDoc()
   const initialRoomState: Room = {
-    roomId: newRoomRef.id,
+    roomId: '3yn9OXjeFDsKF2cyFayS',
     roomName,
     password,
     dealer: dealer,
     player: [
       {
-        name: name,
+        name: 'textUser',
         isReady: false,
         color: 'rgba(255,51,0,0.5)',
         hands: player1,
       },
       {
-        name: '',
+        name: 'User1',
         isReady: false,
         color: 'rgba(0,0,255,0.5)',
         hands: player2,
       },
       {
-        name: '',
+        name: 'User2',
         isReady: false,
         color: 'rgba(255,255,0,0.5)',
         hands: player3,
       },
       {
-        name: '',
+        name: 'User3',
         isReady: false,
         color: 'rgba(0,255,0,0.5)',
         hands: player4,
@@ -111,6 +111,6 @@ export const createRoom = async (input: {
     chat: [],
     state: 'waiting',
   }
-  await setDoc(newRoomRef, initialRoomState)
-  return newRoomRef.id
+  await setDoc(roomDoc, initialRoomState)
+  return '3yn9OXjeFDsKF2cyFayS'
 }

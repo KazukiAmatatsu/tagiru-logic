@@ -17,7 +17,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   /* flex */
-  .text_center {
+  .jcsb {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .center_text {
     display: flex;
     flex-direction: column;
     justify-content: center;
