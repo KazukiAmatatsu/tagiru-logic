@@ -1,5 +1,6 @@
 import { VFC } from 'react'
 import { Hand } from 'src/types'
+import { StateCard } from 'src/components/Page/Room/NumberCards'
 import styled from 'styled-components'
 
 type NumberCardProps = {
@@ -12,20 +13,20 @@ const NumberCard: VFC<NumberCardProps> = ({ hands }) => {
       {hands &&
         Object.entries(hands).map(([key, data]) => {
           return (
-            <StyledNumberCard key={key} yellow={data.color === '#FFFF00'}>
+            <>
               {data.open ? (
-                <div
-                  style={{ backgroundColor: data.color }}
-                  className='card_color'
-                >
-                  <div className='card_num'>{data.number}</div>
-                </div>
+                <StyledNumberCard key={key} yellow={data.color === '#FFFF00'}>
+                  <div
+                    style={{ backgroundColor: data.color }}
+                    className='card_color'
+                  >
+                    <div className='card_num'>{data.number}</div>
+                  </div>
+                </StyledNumberCard>
               ) : (
-                <div key={key} className='text'>
-                  TAGIRON
-                </div>
+                <StateCard />
               )}
-            </StyledNumberCard>
+            </>
           )
         })}
     </div>
@@ -57,12 +58,5 @@ const StyledNumberCard = styled.div<{ yellow: boolean }>`
     text-align: center;
     font-size: 2.5rem;
     font-weight: bold;
-  }
-  .text {
-    color: #fff;
-    font-size: 0.1rem;
-    line-height: 8rem;
-    font-weight: bold;
-    text-align: center;
   }
 `
