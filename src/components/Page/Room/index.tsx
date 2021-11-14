@@ -1,6 +1,10 @@
 import { FC } from 'react'
 import QuestionCard from 'src/components/Page/Room/QuestionCards'
-import { Dealer, Players } from 'src/components/Page/Room/NumberCards'
+import {
+  Dealer,
+  Players,
+  NumberStatus,
+} from 'src/components/Page/Room/NumberCards'
 import Chat from 'src/components/Page/Room/Chat'
 import styled from 'styled-components'
 
@@ -10,6 +14,7 @@ const Room: FC = () => {
       <div className='gameBoard'>
         <div className='inner'>
           <Players />
+          <NumberStatus />
           <QuestionCard />
         </div>
         <div className='inner'>

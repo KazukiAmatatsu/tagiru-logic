@@ -16,6 +16,14 @@ const GlobalStyle = createGlobalStyle`
     color: #333;
   }
 
+  .w-full{
+    width: 100vw;
+  }
+
+  .h-full {
+    height: 100vh;
+  }
+
   /* flex */
   .jcsb {
     display: flex;
@@ -29,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     text-align: center;
   }
+
 `
 
 export default GlobalStyle

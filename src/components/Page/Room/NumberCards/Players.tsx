@@ -1,7 +1,9 @@
 import { FC } from 'react'
 import { useRoom } from 'src/recoil/hooks/useRoom'
-import { NumberCard } from 'src/components/Page/Room/NumberCards'
 import { useUser } from 'src/recoil/hooks/useUser'
+import { NumberCard } from 'src/components/Page/Room/NumberCards'
+import { useRecoilState } from 'recoil'
+import { numberStatus } from 'src/recoil/atom'
 import styled from 'styled-components'
 
 const Players: FC = () => {
@@ -9,12 +11,20 @@ const Players: FC = () => {
   const user = useUser()
   const playerRef = room.player
 
-  // 自分のカードだけ表示する
+  const [numCards, setNumCards] = useRecoilState(numberStatus)
+
+  // 自分のカードだけ表示する&自分のカードをStatusから使用済みにする
   const handsList =
     playerRef &&
     Object.entries(playerRef).map(([key, player]) => {
       if (Number(key) === user.key) {
         const newArr = Object.values(player.hands).map((data) => {
+          // 自分のカードをnumCardsで使用済みにする
+          const newStatus = Object.values(numCards).map((item) => {
+            if (data === item) return { ...item, open: true }
+            return item
+          })
+          // setNumCards(newStatus)
           return { ...data, open: true }
         })
         return { ...player, hands: newArr }
