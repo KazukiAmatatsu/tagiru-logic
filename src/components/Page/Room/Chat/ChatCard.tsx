@@ -119,7 +119,7 @@ const StyledChatCard = styled.li<{ right: boolean }>`
       width: 16rem;
       height: 10rem;
       padding: 1rem;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       font-weight: bold;
       white-space: pre-wrap;
       text-shadow: #fff 2px 0, #fff -2px 0, #fff 0 -2px, #fff 0 2px,

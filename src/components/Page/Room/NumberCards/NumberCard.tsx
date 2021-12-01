@@ -1,4 +1,6 @@
 import { VFC } from 'react'
+import { useRecoilState } from 'recoil'
+import { StatusIsOpen } from 'src/recoil/atom'
 import { Hand } from 'src/types'
 import styled from 'styled-components'
 
@@ -7,34 +9,54 @@ type NumberCardProps = {
 }
 
 const NumberCard: VFC<NumberCardProps> = ({ hands }) => {
+  const [isOpen, setIsOpen] = useRecoilState(StatusIsOpen)
   return (
-    <div className='jcsb'>
-      {hands &&
-        Object.entries(hands).map(([key, data]) => {
-          return (
-            <StyledNumberCard key={key} yellow={data.color === '#FFFF00'}>
-              {data.open ? (
-                <div
-                  style={{ backgroundColor: data.color }}
-                  className='card_color'
-                >
-                  <div className='card_num'>{data.number}</div>
-                </div>
-              ) : (
-                <div key={key} className='text'>
-                  TAGIRON
-                </div>
-              )}
-            </StyledNumberCard>
-          )
-        })}
-    </div>
+    <StyledNumberCard>
+      <div className='jcsb'>
+        {hands &&
+          Object.entries(hands).map(([key, data]) => {
+            return (
+              <div key={key}>
+                {data.open ? (
+                  <StyledCard key={key} yellow={data.color === '#FFFF00'}>
+                    <div
+                      style={{ backgroundColor: data.color }}
+                      className='card_color'
+                    >
+                      <div className='card_num'>{data.number}</div>
+                    </div>
+                  </StyledCard>
+                ) : (
+                  <div className='backCard' onClick={() => setIsOpen(!isOpen)}>
+                    TAGIRON
+                  </div>
+                )}
+              </div>
+            )
+          })}
+      </div>
+    </StyledNumberCard>
   )
 }
 
 export default NumberCard
 
-const StyledNumberCard = styled.div<{ yellow: boolean }>`
+const StyledNumberCard = styled.div`
+  .backCard {
+    width: 6rem;
+    height: 8rem;
+    border-radius: 0.5rem;
+    background-color: ${(props) => props.theme.color};
+    color: #fff;
+    font-size: 0.1rem;
+    line-height: 8rem;
+    font-weight: bold;
+    text-align: center;
+    user-select: none;
+  }
+`
+
+const StyledCard = styled.div<{ yellow: boolean }>`
   width: 6rem;
   height: 8rem;
   background-color: ${(props) => props.theme.color};
@@ -57,12 +79,5 @@ const StyledNumberCard = styled.div<{ yellow: boolean }>`
     text-align: center;
     font-size: 2.5rem;
     font-weight: bold;
-  }
-  .text {
-    color: #fff;
-    font-size: 0.1rem;
-    line-height: 8rem;
-    font-weight: bold;
-    text-align: center;
   }
 `

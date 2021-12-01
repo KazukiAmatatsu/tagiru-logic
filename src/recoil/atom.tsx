@@ -1,5 +1,6 @@
 import { atom } from 'recoil'
-import { User, Room, Rooms } from 'src/types'
+import { numberList } from 'src/components/data'
+import { User, Room, Rooms, Hand } from 'src/types'
 
 export const userState = atom<User>({
   key: 'user_state',
@@ -32,4 +33,14 @@ export const rooms = atom<Rooms[]>({
       password: '',
     },
   ],
+})
+
+export const numberStatus = atom<Hand[]>({
+  key: 'numberCards_status',
+  default: numberList,
+})
+
+export const StatusIsOpen = atom<boolean>({
+  key: 'Status_Modal_isOpen',
+  default: false,
 })

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useRoom } from 'src/recoil/hooks/useRoom'
-import NumberCard from 'src/components/Page/Room/NumberCards/NumberCard'
+import { NumberCard } from 'src/components/Page/Room/NumberCards'
 import styled from 'styled-components'
 
 const Dealer: FC = () => {
