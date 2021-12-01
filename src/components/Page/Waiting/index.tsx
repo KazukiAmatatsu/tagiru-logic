@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { roomList } from 'src/recoil/hooks/roomList'
 import styled from 'styled-components'
 
-const Entrance = () => {
+const Waiting = () => {
   const [newRoom, setNewRoom] =
     useState<{ roomName: string; password: string }>()
   const [password, setPassword] = useState<string>('')
@@ -96,4 +96,4 @@ const Entrance = () => {
   )
 }
 
-export default Entrance
+export default Waiting
